@@ -1,5 +1,11 @@
-# front-run_0day
-For security reasons, we disclose contracts that may be vulnerable to front-running exploits.
+# Front-Running Vulnerability Research
+
+This repository contains independently identified and reproduced
+transaction-ordering and front-running risks in smart contracts.
+
+A report does not necessarily indicate that the finding has been
+acknowledged by the affected project. Some findings may concern
+out-of-scope code, publicly known limitations, or design-dependent behavior.
 ## Vulnerability Reports
 
 | Project | Contract | Finding | Severity | Report | PoC |
