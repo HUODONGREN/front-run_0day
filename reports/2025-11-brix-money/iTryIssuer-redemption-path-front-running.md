@@ -5,8 +5,8 @@
 | Field              | Value                                                                                                                             |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | Target project     | [Brix Money](https://github.com/code-423n4/2025-11-brix-money)                                                                    |
-| Affected contract  | [`src/protocol/iTryIssuer.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/iTryIssuer.sol)           |
-| Related contract   | [`src/protocol/FastAccessVault.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/FastAccessVault.sol) |
+| Affected contract  | [`src/protocol/iTryIssuer.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/iTryIssuer.sol)           |
+| Related contract   | [`src/protocol/FastAccessVault.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/FastAccessVault.sol) |
 | Vulnerability type | Front-running / redemption-path manipulation                                                                                      |
 | Severity           | Medium                                                                                                                            |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #6](https://github.com/HUODONGREN/front-run_0day/issues/6)                                       |
@@ -25,7 +25,7 @@ The rebalance transfers excess DLF from the vault to the custodian. This reduces
 
 The redemption path is selected using the vault's execution-time balance:
 
-[`iTryIssuer.sol#L354-L366`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/iTryIssuer.sol#L354-L366)
+[`iTryIssuer.sol#L354-L366`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/iTryIssuer.sol#L354-L366)
 
 ```solidity
 _burn(msg.sender, iTRYAmount);
@@ -43,7 +43,7 @@ if (bufferBalance >= grossDlfAmount) {
 
 The related `rebalanceFunds()` function is external and has no access-control modifier:
 
-[`FastAccessVault.sol#L165-L181`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/FastAccessVault.sol#L165-L181)
+[`FastAccessVault.sol#L165-L181`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/FastAccessVault.sol#L165-L181)
 
 ```solidity
 function rebalanceFunds() external {
@@ -360,8 +360,8 @@ Additional protections may include:
 ## References
 
 * [Brix Money repository](https://github.com/code-423n4/2025-11-brix-money)
-* [`iTryIssuer.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/iTryIssuer.sol)
-* [`redeemITRY()` redemption-path selection](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/iTryIssuer.sol#L354-L366)
-* [`FastAccessVault.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/FastAccessVault.sol)
-* [`rebalanceFunds()`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/protocol/FastAccessVault.sol#L165-L181)
+* [`iTryIssuer.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/iTryIssuer.sol)
+* [`redeemITRY()` redemption-path selection](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/iTryIssuer.sol#L354-L366)
+* [`FastAccessVault.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/FastAccessVault.sol)
+* [`rebalanceFunds()`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/protocol/FastAccessVault.sol#L165-L181)
 * [Foundry PoC — Issue #6](https://github.com/HUODONGREN/front-run_0day/issues/6)
