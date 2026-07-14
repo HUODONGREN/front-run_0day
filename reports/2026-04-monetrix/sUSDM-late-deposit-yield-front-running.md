@@ -32,7 +32,7 @@ function totalAssets() public view override returns (uint256) {
 
 New deposits and mints remain available and use the standard ERC-4626 exchange rate:
 
-[`sUSDM.sol#L122-L128`](hhttps://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L122-L128)
+[`sUSDM.sol#L122-L128`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L122-L128)
 
 ```solidity
 function deposit(
