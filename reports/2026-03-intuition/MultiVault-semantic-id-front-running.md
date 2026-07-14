@@ -1,3 +1,5 @@
+# Atom and triple creation can be front-run to squat semantic vault IDs
+
 ## Finding Metadata
 
 | Field              | Value                                                                                                                  |
