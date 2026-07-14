@@ -5,7 +5,7 @@
 | Field              | Value                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------- |
 | Target project     | [Monetrix](https://github.com/code-423n4/2026-04-monetrix)                                              |
-| Affected contract  | [`src/tokens/sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol) |
+| Affected contract  | [`src/tokens/sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol) |
 | Vulnerability type | Front-running / yield sniping                                                                           |
 | Severity           | Medium                                                                                                  |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #10](https://github.com/HUODONGREN/front-run_0day/issues/10)           |
@@ -22,7 +22,7 @@ The attacker receives shares at the stale pre-yield exchange rate. When the hist
 
 `totalAssets()` only counts the USDM already held by the sUSDM contract:
 
-[`sUSDM.sol#L102-L104`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L102-L104)
+[`sUSDM.sol#L102-L104`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L102-L104)
 
 ```solidity
 function totalAssets() public view override returns (uint256) {
@@ -32,7 +32,7 @@ function totalAssets() public view override returns (uint256) {
 
 New deposits and mints remain available and use the standard ERC-4626 exchange rate:
 
-[`sUSDM.sol#L122-L128`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L122-L128)
+[`sUSDM.sol#L122-L128`](hhttps://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L122-L128)
 
 ```solidity
 function deposit(
@@ -52,7 +52,7 @@ function mint(
 
 The pending yield is added to `totalAssets()` only when `injectYield()` transfers the USDM into sUSDM:
 
-[`sUSDM.sol#L205-L215`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L205-L215)
+[`sUSDM.sol#L205-L215`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L205-L215)
 
 ```solidity
 function injectYield(
@@ -379,8 +379,8 @@ function deposit(
 ## References
 
 * [Monetrix repository](https://github.com/code-423n4/2026-04-monetrix)
-* [`sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol)
-* [`totalAssets()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L102-L104)
-* [`deposit()` and `mint()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L122-L128)
-* [`injectYield()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L205-L215)
+* [`sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol)
+* [`totalAssets()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L102-L104)
+* [`deposit()` and `mint()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L122-L128)
+* [`injectYield()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L205-L215)
 * [Foundry PoC — Issue #10](https://github.com/HUODONGREN/front-run_0day/issues/10)
