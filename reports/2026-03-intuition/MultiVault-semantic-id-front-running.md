@@ -1,5 +1,3 @@
-<img width="2560" height="1270" alt="image" src="https://github.com/user-attachments/assets/3c5188a4-e035-4dbd-857b-4b61e8de4b40" /># Atom and triple creation can be front-run to squat semantic vault IDs
-
 ## Finding Metadata
 
 | Field              | Value                                                                                                                  |
