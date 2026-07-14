@@ -5,7 +5,7 @@
 | Field              | Value                                                                                                               |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | Target project     | [Brix Money](https://github.com/code-423n4/2025-11-brix-money)                                                      |
-| Affected contract  | [`src/external/DLFToken.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol) |
+| Affected contract  | [`src/external/DLFToken.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol) |
 | Vulnerability type | Front-running / administrative-action preemption                                                                    |
 | Severity           | Medium                                                                                                              |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #1](https://github.com/HUODONGREN/front-run_0day/issues/1)                         |
@@ -22,7 +22,7 @@ If the holder's transfer executes first, the tokens are moved to another unblack
 
 Transfers are restricted only according to the blacklist and pause state that exists when the transfer executes:
 
-[`DLFToken.sol#L31-L35`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L31-L35)
+[`DLFToken.sol#L31-L35`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L31-L35)
 
 ```solidity
 function _beforeTokenTransfer(
@@ -39,7 +39,7 @@ function _beforeTokenTransfer(
 
 The administrative actions are performed through separate owner transactions:
 
-[`DLFToken.sol#L23-L25`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L23-L25)
+[`DLFToken.sol#L23-L25`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L23-L25)
 
 ```solidity
 function pause() public onlyOwner {
@@ -47,7 +47,7 @@ function pause() public onlyOwner {
 }
 ```
 
-[`DLFToken.sol#L36-L39`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L36-L39)
+[`DLFToken.sol#L36-L39`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L36-L39)
 
 ```solidity
 function blacklist(address account) public onlyOwner {
@@ -56,7 +56,7 @@ function blacklist(address account) public onlyOwner {
 }
 ```
 
-[`DLFToken.sol#L50-L52`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L50-L52)
+[`DLFToken.sol#L50-L52`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L50-L52)
 
 ```solidity
 function burn(address from, uint256 amount) public onlyOwner {
@@ -241,9 +241,9 @@ For emergency handling, submit `pause()` privately before broadcasting targeted 
 ## References
 
 * [Brix Money repository](https://github.com/code-423n4/2025-11-brix-money)
-* [`DLFToken.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol)
-* [Transfer restriction logic](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L31-L35)
-* [Blacklist implementation](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L36-L39)
-* [Pause implementation](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L23-L25)
-* [Burn implementation](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/external/DLFToken.sol#L50-L52)
+* [`DLFToken.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol)
+* [Transfer restriction logic](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L31-L35)
+* [Blacklist implementation](hhttps://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L36-L39)
+* [Pause implementation](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L23-L25)
+* [Burn implementation](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L50-L52)
 * [Foundry PoC — Issue #1](https://github.com/HUODONGREN/front-run_0day/issues/1)
