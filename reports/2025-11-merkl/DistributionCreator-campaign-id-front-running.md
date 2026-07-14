@@ -5,7 +5,7 @@
 | Field              | Value                                                                                                                          |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | Target project     | [Merkl](https://github.com/code-423n4/2025-11-merkl)                                                                           |
-| Affected contract  | [`contracts/DistributionCreator.sol`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/DistributionCreator.sol) |
+| Affected contract  | [`contracts/DistributionCreator.sol`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/DistributionCreator.sol) |
 | Vulnerability type | Front-running / deterministic campaign ID squatting                                                                            |
 | Severity           | Medium                                                                                                                         |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #2](https://github.com/HUODONGREN/front-run_0day/issues/2)                                    |
@@ -24,7 +24,7 @@ Because both campaigns generate the same `campaignId`, the attacker creates the 
 
 The campaign ID is calculated without including `campaignData.amount`:
 
-[`DistributionCreator.sol#L353-L372`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/DistributionCreator.sol#L353-L372)
+[`DistributionCreator.sol#L353-L372`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/DistributionCreator.sol#L353-L372)
 
 ```solidity
 function campaignId(
@@ -48,7 +48,7 @@ function campaignId(
 
 During campaign creation, the resulting ID is checked against `_campaignLookup`. If the ID has already been registered, the transaction reverts:
 
-[`DistributionCreator.sol`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/DistributionCreator.sol)
+[`DistributionCreator.sol`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/DistributionCreator.sol)
 
 ```solidity
 newCampaign.amount = campaignAmountMinusFees;
@@ -367,6 +367,6 @@ A commit-reveal mechanism may be used when campaign parameters must remain hidde
 ## References
 
 * [Merkl repository](https://github.com/code-423n4/2025-11-merkl)
-* [`DistributionCreator.sol`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/DistributionCreator.sol)
-* [`campaignId()`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/DistributionCreator.sol#L353-L372)
+* [`DistributionCreator.sol`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/DistributionCreator.sol)
+* [`campaignId()`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/DistributionCreator.sol#L353-L372)
 * [Foundry PoC — Issue #2](https://github.com/HUODONGREN/front-run_0day/issues/2)
