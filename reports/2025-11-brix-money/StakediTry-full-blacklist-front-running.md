@@ -5,7 +5,7 @@
 | Field              | Value                                                                                                                         |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
 | Target project     | [Brix Money](https://github.com/code-423n4/2025-11-brix-money)                                                                |
-| Affected contract  | [`src/token/wiTRY/StakediTry.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol) |
+| Affected contract  | [`src/token/wiTRY/StakediTry.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol) |
 | Vulnerability type | Front-running / blacklist preemption                                                                                          |
 | Severity           | Medium                                                                                                                        |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #4](https://github.com/HUODONGREN/front-run_0day/issues/4)                                   |
@@ -28,7 +28,7 @@ The blacklist is then applied to the original address after its balance has alre
 
 The blacklist role is granted only when `addToBlacklist()` executes:
 
-[`StakediTry.sol#L124-L134`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol#L124-L134)
+[`StakediTry.sol#L124-L134`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol#L124-L134)
 
 ```solidity
 function addToBlacklist(address target, bool isFullBlacklisting)
@@ -46,7 +46,7 @@ function addToBlacklist(address target, bool isFullBlacklisting)
 
 Transfers are blocked only when the sender or recipient already has the full restriction role:
 
-[`StakediTry.sol#L289-L299`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol#L289-L299)
+[`StakediTry.sol#L289-L299`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol#L289-L299)
 
 ```solidity
 function _beforeTokenTransfer(
@@ -69,7 +69,7 @@ function _beforeTokenTransfer(
 
 `redistributeLockedAmount()` only reads and redistributes the target's current share balance:
 
-[`StakediTry.sol#L168-L183`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol#L168-L183)
+[`StakediTry.sol#L168-L183`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol#L168-L183)
 
 ```solidity
 function redistributeLockedAmount(
@@ -373,8 +373,8 @@ The atomic transaction should still be submitted privately because a publicly vi
 ## References
 
 * [Brix Money repository](https://github.com/code-423n4/2025-11-brix-money)
-* [`StakediTry.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol)
-* [`addToBlacklist()`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol#L124-L134)
-* [`redistributeLockedAmount()`](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol#L168-L183)
-* [Transfer restriction hook](https://github.com/code-423n4/2025-11-brix-money/blob/main/src/token/wiTRY/StakediTry.sol#L289-L299)
+* [`StakediTry.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol)
+* [`addToBlacklist()`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol#L124-L134)
+* [`redistributeLockedAmount()`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol#L168-L183)
+* [Transfer restriction hook](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/token/wiTRY/StakediTry.sol#L289-L299)
 * [Foundry PoC — Issue #4](https://github.com/HUODONGREN/front-run_0day/issues/4)
