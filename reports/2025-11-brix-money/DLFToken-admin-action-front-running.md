@@ -243,7 +243,7 @@ For emergency handling, submit `pause()` privately before broadcasting targeted 
 * [Brix Money repository](https://github.com/code-423n4/2025-11-brix-money)
 * [`DLFToken.sol`](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol)
 * [Transfer restriction logic](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L31-L35)
-* [Blacklist implementation](hhttps://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L36-L39)
+* [Blacklist implementation](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L36-L39)
 * [Pause implementation](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L23-L25)
 * [Burn implementation](https://github.com/code-423n4/2025-11-brix-money/blob/c40317bcdefc0191e3a6457cdcd33da6b95c09b8/src/external/DLFToken.sol#L50-L52)
 * [Foundry PoC — Issue #1](https://github.com/HUODONGREN/front-run_0day/issues/1)
