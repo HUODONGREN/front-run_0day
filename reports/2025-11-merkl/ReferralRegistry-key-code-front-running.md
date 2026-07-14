@@ -5,7 +5,7 @@
 | Field              | Value                                                                                                                    |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | Target project     | [Merkl](https://github.com/code-423n4/2025-11-merkl)                                                                     |
-| Affected contract  | [`contracts/ReferralRegistry.sol`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol) |
+| Affected contract  | [`contracts/ReferralRegistry.sol`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol) |
 | Vulnerability type | Front-running / referral identifier squatting                                                                            |
 | Severity           | Medium                                                                                                                   |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #11](https://github.com/HUODONGREN/front-run_0day/issues/11)                            |
@@ -26,7 +26,7 @@ For referrer codes, users who later acknowledge the hijacked code are bound to t
 
 `addReferralKey()` only checks whether the key is unused at execution time and then assigns the supplied owner:
 
-[`ReferralRegistry.sol#L70-L94`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol#L70-L94)
+[`ReferralRegistry.sol#L70-L94`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol#L70-L94)
 
 ```solidity
 function addReferralKey(
@@ -65,7 +65,7 @@ function addReferralKey(
 
 `becomeReferrer()` applies the same first-come-first-served rule to referrer codes:
 
-[`ReferralRegistry.sol#L134-L156`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol#L134-L156)
+[`ReferralRegistry.sol#L134-L156`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol#L134-L156)
 
 ```solidity
 function becomeReferrer(
@@ -101,7 +101,7 @@ function becomeReferrer(
 
 Users acknowledging a code are bound to the address stored by the first successful registrant:
 
-[`ReferralRegistry.sol#L186-L190`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol#L186-L190)
+[`ReferralRegistry.sol#L186-L190`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol#L186-L190)
 
 ```solidity
 function acknowledgeReferrerByKey(
@@ -473,8 +473,8 @@ Alternative mitigations include:
 ## References
 
 * [Merkl repository](https://github.com/code-423n4/2025-11-merkl)
-* [`ReferralRegistry.sol`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol)
-* [`addReferralKey()`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol#L70-L94)
-* [`becomeReferrer()`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol#L134-L156)
-* [`acknowledgeReferrerByKey()`](https://github.com/code-423n4/2025-11-merkl/blob/main/contracts/ReferralRegistry.sol#L186-L190)
+* [`ReferralRegistry.sol`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol)
+* [`addReferralKey()`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol#L70-L94)
+* [`becomeReferrer()`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol#L134-L156)
+* [`acknowledgeReferrerByKey()`](https://github.com/code-423n4/2025-11-merkl/blob/542610c5c1bac6dca0d23eef4249f612eb9ff21e/contracts/ReferralRegistry.sol#L186-L190)
 * [Foundry PoC — Issue #11](https://github.com/HUODONGREN/front-run_0day/issues/11)
