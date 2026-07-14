@@ -5,8 +5,8 @@
 | Field              | Value                                                                                                                      |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | Target project     | [Chainlink Payment Abstraction V2](https://github.com/code-423n4/2026-03-chainlink)                                        |
-| Affected contract  | [`src/GPV2CompatibleAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/GPV2CompatibleAuction.sol) |
-| Related contract   | [`src/BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol)                     |
+| Affected contract  | [`src/GPV2CompatibleAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/GPV2CompatibleAuction.sol) |
+| Related contract   | [`src/BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol)                     |
 | Vulnerability type | Front-running / shared-inventory preemption                                                                                |
 | Severity           | Low-Medium / Medium                                                                                                        |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #8](https://github.com/HUODONGREN/front-run_0day/issues/8)                                |
@@ -23,7 +23,7 @@ An attacker can observe a pending CoW settlement and front-run it by directly ca
 
 `isValidSignature()` checks the CoW order against the contract's current token balance:
 
-[`GPV2CompatibleAuction.sol#L141-L151`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/GPV2CompatibleAuction.sol#L141-L151)
+[`GPV2CompatibleAuction.sol#L141-L151`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/GPV2CompatibleAuction.sol#L141-L151)
 
 ```solidity
 if (order.sellAmount == 0) {
@@ -45,7 +45,7 @@ At the same time, `GPV2CompatibleAuction` inherits the public `bid()` function f
 
 The direct bid checks the same live inventory:
 
-[`BaseAuction.sol#L437-L440`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L437-L440)
+[`BaseAuction.sol#L437-L440`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L437-L440)
 
 ```solidity
 uint256 availableBalance = IERC20(asset).balanceOf(address(this));
@@ -57,7 +57,7 @@ if (amount > availableBalance) {
 
 After the check, the auctioned asset is transferred to the direct bidder:
 
-[`BaseAuction.sol#L442-L456`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L442-L456)
+[`BaseAuction.sol#L442-L456`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L442-L456)
 
 ```solidity
 uint256 assetOutAmount =
@@ -306,9 +306,9 @@ Possible mitigations include:
 ## References
 
 * [Chainlink Payment Abstraction V2 repository](https://github.com/code-423n4/2026-03-chainlink)
-* [`GPV2CompatibleAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/GPV2CompatibleAuction.sol)
-* [`BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol)
-* [CoW order balance validation](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/GPV2CompatibleAuction.sol#L141-L151)
-* [Direct bid inventory check](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L437-L440)
-* [Direct bid asset transfer](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L442-L456)
+* [`GPV2CompatibleAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/GPV2CompatibleAuction.sol)
+* [`BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol)
+* [CoW order balance validation](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/GPV2CompatibleAuction.sol#L141-L151)
+* [Direct bid inventory check](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L437-L440)
+* [Direct bid asset transfer](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L442-L456)
 * [Foundry PoC — Issue #8](https://github.com/HUODONGREN/front-run_0day/issues/8)
