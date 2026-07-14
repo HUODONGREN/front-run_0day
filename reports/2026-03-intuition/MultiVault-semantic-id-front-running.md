@@ -1,11 +1,11 @@
-# Atom and triple creation can be front-run to squat semantic vault IDs
+<img width="2560" height="1270" alt="image" src="https://github.com/user-attachments/assets/3c5188a4-e035-4dbd-857b-4b61e8de4b40" /># Atom and triple creation can be front-run to squat semantic vault IDs
 
 ## Finding Metadata
 
 | Field              | Value                                                                                                                  |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
 | Target project     | [Intuition](https://github.com/code-423n4/2026-03-intuition)                                                           |
-| Affected contract  | [`src/protocol/MultiVault.sol`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol) |
+| Affected contract  | [`src/protocol/MultiVault.sol`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol) |
 | Vulnerability type | Front-running / deterministic identifier squatting                                                                     |
 | Severity           | Medium                                                                                                                 |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #12](https://github.com/HUODONGREN/front-run_0day/issues/12)                          |
@@ -24,7 +24,7 @@ The attacker's transaction executes first, creates the semantic vault, and recei
 
 `createAtoms()` forwards the caller and public atom data into `_createAtom()`:
 
-[`MultiVault.sol#L2809-L2832`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2809-L2832)
+[`MultiVault.sol#L2809-L2832`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2809-L2832)
 
 ```solidity
 function createAtoms(
@@ -44,7 +44,7 @@ function createAtoms(
 
 The atom ID is calculated directly from the public data. If the ID already exists, the later transaction reverts:
 
-[`MultiVault.sol#L2907-L2936`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2907-L2936)
+[`MultiVault.sol#L2907-L2936`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2907-L2936)
 
 ```solidity
 function _createAtom(
@@ -73,7 +73,7 @@ function _createAtom(
 
 The initial atom-vault shares are credited to the transaction sender:
 
-[`MultiVault.sol#L2942-L2963`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2942-L2963)
+[`MultiVault.sol#L2942-L2963`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2942-L2963)
 
 ```solidity
 (
@@ -96,7 +96,7 @@ emit AtomCreated(sender, atomId, data, atomWallet);
 
 `createTriples()` similarly accepts the semantic tuple in plaintext:
 
-[`MultiVault.sol#L2982-L3007`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2982-L3007)
+[`MultiVault.sol#L2982-L3007`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2982-L3007)
 
 ```solidity
 function createTriples(
@@ -125,7 +125,7 @@ function createTriples(
 
 The triple ID is deterministically calculated and checked before initial shares are assigned to the first caller:
 
-[`MultiVault.sol#L3103-L3157`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L3103-L3157)
+[`MultiVault.sol#L3103-L3157`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L3103-L3157)
 
 ```solidity
 function _createTriple(
@@ -499,9 +499,9 @@ Alternative protections include:
 ## References
 
 * [Intuition repository](https://github.com/code-423n4/2026-03-intuition)
-* [`MultiVault.sol`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol)
-* [`createAtoms()`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2809-L2832)
-* [`_createAtom()`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2907-L2963)
-* [`createTriples()`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L2982-L3007)
-* [`_createTriple()`](https://github.com/code-423n4/2026-03-intuition/blob/main/src/protocol/MultiVault.sol#L3103-L3176)
+* [`MultiVault.sol`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol)
+* [`createAtoms()`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2809-L2832)
+* [`_createAtom()`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2907-L2963)
+* [`createTriples()`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L2982-L3007)
+* [`_createTriple()`](https://github.com/code-423n4/2026-03-intuition/blob/314b7d4d9ccbaf27e4484a6c0706af83d3f75f36/src/protocol/MultiVault.sol#L3103-L3176)
 * [Foundry PoC — Issue #12](https://github.com/HUODONGREN/front-run_0day/issues/12)
