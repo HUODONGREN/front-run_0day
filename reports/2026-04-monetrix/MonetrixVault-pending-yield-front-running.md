@@ -5,8 +5,8 @@
 | Field              | Value                                                                                                               |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | Target project     | [Monetrix](https://github.com/code-423n4/2026-04-monetrix)                                                          |
-| Affected contract  | [`src/core/MonetrixVault.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/core/MonetrixVault.sol) |
-| Related contract   | [`src/tokens/sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol)             |
+| Affected contract  | [`src/core/MonetrixVault.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/core/MonetrixVault.sol) |
+| Related contract   | [`src/tokens/sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol)             |
 | Vulnerability type | Front-running / yield sniping                                                                                       |
 | Severity           | Medium                                                                                                              |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #9](https://github.com/HUODONGREN/front-run_0day/issues/9)                         |
@@ -25,7 +25,7 @@ An attacker can deposit into sUSDM after `settle()` but before `distributeYield(
 
 `settle()` transfers realized yield into `yieldEscrow` without updating the sUSDM share price:
 
-[`MonetrixVault.sol#L373-L382`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/core/MonetrixVault.sol#L373-L382)
+[`MonetrixVault.sol#L373-L382`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/core/MonetrixVault.sol#L373-L382)
 
 ```solidity
 function settle(uint256 proposedYield)
@@ -61,7 +61,7 @@ function settle(uint256 proposedYield)
 
 The pending yield is only injected into sUSDM later through `distributeYield()`:
 
-[`MonetrixVault.sol#L384-L408`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/core/MonetrixVault.sol#L384-L408)
+[`MonetrixVault.sol#L384-L408`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/core/MonetrixVault.sol#L384-L408)
 
 ```solidity
 function distributeYield()
@@ -99,7 +99,7 @@ function distributeYield()
 
 `sUSDM.totalAssets()` only counts USDM already held by the sUSDM contract:
 
-[`sUSDM.sol#L105-L107`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L105-L107)
+[`sUSDM.sol#L105-L107`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L105-L107)
 
 ```solidity
 function totalAssets()
@@ -394,10 +394,10 @@ Alternative mitigations include:
 ## References
 
 * [Monetrix repository](https://github.com/code-423n4/2026-04-monetrix)
-* [`MonetrixVault.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/core/MonetrixVault.sol)
-* [`settle()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/core/MonetrixVault.sol#L373-L382)
-* [`distributeYield()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/core/MonetrixVault.sol#L384-L408)
-* [`sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol)
-* [`sUSDM.totalAssets()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L105-L107)
-* [`sUSDM.injectYield()`](https://github.com/code-423n4/2026-04-monetrix/blob/main/src/tokens/sUSDM.sol#L205-L215)
+* [`MonetrixVault.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/core/MonetrixVault.sol)
+* [`settle()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/core/MonetrixVault.sol#L373-L382)
+* [`distributeYield()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/core/MonetrixVault.sol#L384-L408)
+* [`sUSDM.sol`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol)
+* [`sUSDM.totalAssets()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L105-L107)
+* [`sUSDM.injectYield()`](https://github.com/code-423n4/2026-04-monetrix/blob/3d94be1361ca01d959f9165a78f0d75c5657fe3e/src/tokens/sUSDM.sol#L205-L215)
 * [Foundry PoC — Issue #9](https://github.com/HUODONGREN/front-run_0day/issues/9)
