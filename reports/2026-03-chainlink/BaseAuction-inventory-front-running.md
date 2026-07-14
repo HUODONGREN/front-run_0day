@@ -5,7 +5,7 @@
 | Field              | Value                                                                                                  |
 | ------------------ | ------------------------------------------------------------------------------------------------------ |
 | Target project     | [Chainlink Payment Abstraction V2](https://github.com/code-423n4/2026-03-chainlink)                    |
-| Affected contract  | [`src/BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol) |
+| Affected contract  | [`src/BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol) |
 | Vulnerability type | Front-running / auction-inventory preemption                                                           |
 | Severity           | Low-Medium / Medium                                                                                    |
 | Proof of concept   | [HUODONGREN/front-run_0day Issue #7](https://github.com/HUODONGREN/front-run_0day/issues/7)            |
@@ -22,7 +22,7 @@ If the attacker's transaction executes first, the victim's later bid observes a 
 
 The function checks the requested amount against the auction contract's current token balance:
 
-[`BaseAuction.sol#L437-L440`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L437-L440)
+[`BaseAuction.sol#L437-L440`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L437-L440)
 
 ```solidity
 uint256 availableBalance = IERC20(asset).balanceOf(address(this));
@@ -34,7 +34,7 @@ if (amount > availableBalance) {
 
 After the check, the requested auctioned asset is transferred to the currently executing bidder:
 
-[`BaseAuction.sol#L442-L456`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L442-L456)
+[`BaseAuction.sol#L442-L456`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L442-L456)
 
 ```solidity
 uint256 assetOutAmount =
@@ -277,7 +277,7 @@ The function could fill the smaller of the desired amount and the remaining inve
 ## References
 
 * [Chainlink Payment Abstraction V2 repository](https://github.com/code-423n4/2026-03-chainlink)
-* [`BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol)
-* [Auction inventory check](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L437-L440)
-* [Auctioned-asset transfer and payment](https://github.com/code-423n4/2026-03-chainlink/blob/main/src/BaseAuction.sol#L442-L456)
+* [`BaseAuction.sol`](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol)
+* [Auction inventory check](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L437-L440)
+* [Auctioned-asset transfer and payment](https://github.com/code-423n4/2026-03-chainlink/blob/5317782e3855d9547412ab5a490257d7c5e51fac/src/BaseAuction.sol#L442-L456)
 * [Foundry PoC — Issue #7](https://github.com/HUODONGREN/front-run_0day/issues/7)
